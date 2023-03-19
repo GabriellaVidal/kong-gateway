@@ -1,33 +1,41 @@
-_format_version: "3.0"
-_transform: true
+ _format_version: "3.0"
+ _transform: true
 
-services:
-  - host: mockbin.org
-    name: example_service
-    port: 80
-    protocol: http
-    routes:
-    - name: example_route
-      paths:
-      - /mock
-      strip_path: true
+ services:
+ - host: mockbin.org
+   name: example_service
+   port: 80
+   protocol: http
+   routes:
+   - name: example_route
+     paths:
+     - /mock
+     strip_path: true
+ - host: bancodetalentos-h.jfce.jus.br
+   name: banco-talentos
+   port: 80
+   protocol: http
+   routes:
+   - name: banco-talentos-list
+     paths:
+     - /b-talentos/talentos
+     strip_path: true
+     plugins:
+     - name: request-transformer
+       enabled: true
+       config:
+         replace:
+          uri: /api/talento
+   - name: banco-talentos-nivel-list
+     paths:
+     - /b-talentos/niveis
+     strip_path: true
+     plugins:
+     - name: request-transformer
+       enabled: true
+       config:
+         replace:
+          uri: /api/nivel
 
-  - host: servicos2.jfrn.jus.br/rhjfrnApi
-    name: api-sarh
-    port: 80
-    protocol: http
-    routes:
-    - name: api-sarh
-      paths:
-      - /sarh
-      strip_path: true
 
-  - host: bancodetalentos-h.jfce.jus.br
-    name: banco-talentos
-    port: 80
-    protocol: http
-    routes:
-    - name: banco-talentos
-      paths:
-      - /b-talentos
-      strip_path: true
+ 

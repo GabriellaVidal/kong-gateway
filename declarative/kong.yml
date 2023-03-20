@@ -36,6 +36,23 @@
        config:
          replace:
           uri: /api/nivel
-
-
+ - host: servicos2.jfrn.jus.br
+   name: sarh
+   port: 80
+   protocol: http
+   routes:
+   - name: sarh-secadm-usuarios
+     paths:
+     - /sarh/secadm/usuarios
+     plugins:
+     - name: request-transformer
+       config:
+         replace:
+          uri: /rhjfrnApi/secadm/usuarios
+         remove:
+          headers:
+          - token
+         add:
+          headers:
+          - Authorization:Bearer $(headers["token"])
  

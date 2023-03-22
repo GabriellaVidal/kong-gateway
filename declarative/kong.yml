@@ -13,8 +13,8 @@
      strip_path: true
  - host: bancodetalentos-h.jfce.jus.br
    name: banco-talentos
-   port: 80
-   protocol: http
+   port: 443
+   protocol: https
    routes:
    - name: banco-talentos-list
      paths:
@@ -23,6 +23,40 @@
      plugins:
      - name: request-transformer
        enabled: true
+       protocols: 
+        - https
        config:
          replace:
           uri: /api/talento
+   - name: banco-talentos-nivel-list
+     paths:
+     - /b-talentos/niveis
+     strip_path: true
+     plugins:
+     - name: request-transformer
+       protocols:
+        - https
+       config:
+         replace:
+          uri: /api/nivel
+ - host: servicos2.jfrn.jus.br
+   name: sarh
+   port: 443
+   protocol: https
+   routes:
+   - name: sarh-secadm-usuarios
+     paths:
+     - /sarh/secadm/usuarios
+     plugins:
+     - name: request-transformer
+       protocols: 
+        - https
+       config:
+         replace:
+          uri: /rhjfrnApi/secadm/usuarios
+         remove:
+          headers: 
+          - token
+         add:
+          headers:
+          - Authorization:Bearer $(headers["token"])
